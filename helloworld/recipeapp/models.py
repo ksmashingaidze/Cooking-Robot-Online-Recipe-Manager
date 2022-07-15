@@ -2,7 +2,7 @@
 
 from django.db import models
 from django.urls import reverse
-
+from autoslug import AutoSlugField
 # class MyModelName(models.Model):
     # """A typical class defining a model, derived from the Model class."""
 
@@ -35,36 +35,24 @@ class Recipe(models.Model):
     author = models.CharField(max_length=100)
     ingredients = models.CharField(max_length=1000)
     utensils = models.CharField(max_length=500)
-    prep_directions = models.CharField(max_length=1000)
+    directions = models.CharField(max_length=1000)
     prep_time_min = models.FloatField(max_length=100)
     cook_time_min = models.FloatField(max_length=100)
     cook_setting = models.CharField(max_length=100)
     calories = models.IntegerField()
     rating = models.IntegerField()
 
-    class Meta:
-        ordering = ['recipe_name', 'rating']
+    def __str__(self):
+        return self.recipe_name
+
+    #class Meta:
+     #   ordering = ['recipe_name', 'rating']
 
     #def get_absolute_url(self):
         #"""Returns the URL to access a particular author instance."""
         #return reverse('author-detail', args=[str(self.id)])
 
-    def __str__(self):
-        """String for representing the Model object."""
-        return f'{self.recipe_name}, {self.author}'
-
-# Create a new record using the model's constructor.
-#record = Recipe(recipe_name="Feta Eggs",
-#               author = "Stephen",
-#                ingredients = "1 tablespoon butter, 1/4 cup chopped onion, 4 eggs beaten, 1/4 cup chopped tomatoes, 2 tablespoons crumbled feta cheese, salt and pepper",
-#                utensils = "knife, fork, spatula",
-#                prep_directions = "Melt butter in a skillet over medium heat. Saute onions until translucent. Pour in eggs. Cook, stirring occasionally to scramble. When eggs appear almost done, stir in chopped tomatoes and feta cheese, and season with salt and pepper. Cook until cheese is melted.",
-#                prep_time_min = 10,
-#                cook_time_min = 5,
-#                cook_setting = "Medium",
-#                calories = 116,
-#                rating = 3,
-#)
-# Save the object into the database.
-#record.save()
+    #def __str__(self):
+     #   """String for representing the Model object."""
+      #  return f'{self.recipe_name}, {self.author}'
 

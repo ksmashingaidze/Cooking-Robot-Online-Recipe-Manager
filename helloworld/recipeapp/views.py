@@ -1,22 +1,16 @@
 from django.shortcuts import render
-
-# Create your views here.
-from django.views import generic
 from .models import Recipe
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+# Create your views here.
 def home(request):
-    #View the home page
-    return render(request, 'home.html')
-
-def browse(request):
-    #View the browse recipe page
-
-    #Get the recipes from the model file, then pass them to the browse recipe HTML template
-    recipes = Recipe.objects.all()
+    total_recipes = Recipe.objects.all().count()
     context = {
-        'recipes': recipes,
-    }
-
-
-    return render(request, 'browse.html', context=context)
-
+        "title":"Homepage",
+        "total_recipes":total_recipes,
+    }  
+        
+    return render(request, "templates/home.html", context)
+	
+def browse(request):
+	recipes = Recipe.objects.all()
+	return render(request,'templates/browse.html',{'recipes': recipes})
