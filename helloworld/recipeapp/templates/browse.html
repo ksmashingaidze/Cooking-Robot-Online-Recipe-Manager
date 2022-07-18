@@ -92,8 +92,6 @@
 }
 .items{
   display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: 10px;
 }
 .item-list{
@@ -149,6 +147,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
               </li>
+                </Ul>
           </div>
         </nav>
     </navbar>
@@ -190,7 +189,7 @@
                             </div>
                           <ul class="list-group list-group-flush">
                               <div class="form-group m-auto">
-                                  <input type="range" class="form-range" min="1"  max="5" id="customRange2"  step="1" onInput="$('#rangeval').html($(this).val())">
+                                  <input type="range" class="form-range" min="1"  max="5" id="customRange"  step="1" onInput="$('#rangeval').html($(this).val())">
                                   <span id="rangeval">3<!-- Default value --></span> 
                               </div>
                           </ul>
@@ -209,7 +208,7 @@
                         </div>
                       </div>
                     </div>
-
+                    </div>
                 </div>
             </div>
       </section>
@@ -218,13 +217,13 @@
 		
 		<div class="item-list">
         <div class="row item flex-row justify-content-center m-0 mb-2 " href="{{ recipes.get_absolute_url }}">
-			{% for item in page_obj %}
-            <div class="col-3 mr-4">
-                <div class="card" style="width: 18rem;">
+			{% for item in newRecepie %}
+            <div class="col-lg-3 mr-lg-4">
+                <div class="card" style="width: 18rem;height:160px;">
                     <div class="card-body">
                       <h5 class="card-title" href="{{ recipes.get_absolute_url }}">{{ item.recipe_name }}</h5>
                       <h6 class="card-subtitle mb-2 text-muted">{{ item.prep_time_min }} min. prep + {{ item.cook_time_min }} min. cook</h6>
-                      <p class="card-text">{{ item.ingredients }}</p>
+                      <p class="card-text" style="text-overflow:ellipsis;overflow: hidden;white-space: nowrap;">{{ item.ingredients }}</p>
                       <a href="#" class="card-link"> Read more </a>
                     </div>
                 </div>
@@ -240,25 +239,27 @@
         
       </section>
       <div class="row flex-row justify-content-center pt-3 pb-3 m-0">
-  
-        <div class="pagination">
-			<span class="step-links">
-			{% if page_obj.has_previous %}
-				<a href="?page=1">&laquo; first</a>
-				<a href="?page={{ page_obj.previous_page_number }}">previous</a>
-			{% endif %}
-			
-			<span class="current">
-				Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-			</span>
-			
-			{% if page_obj.has_next %}
-				<a href="?page={{ page_obj.next_page_number }}">next</a>
-				<a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-			{% endif %}
-			
-            </span>
-          </div>
+             {% if newRecepie.has_other_pages %}
+                <div class="pagination">
+                       {% if newRecepie.has_previous %}
+                        <a href="?page={{ newRecepie.previous_page_number }}">&laquo;</a>
+                        {% else %}
+                        <a class="disabled"><span>&laquo;</span></a>
+                    {% endif %}
+                {% for i in newRecepie.paginator.page_range %}
+                  {% if newRecepie.number == i %}
+                    <a class="active">{{ i }}</a>
+                  {% else %}
+                    <a href="?page={{ i }}">{{ i }}</a>
+                  {% endif %}
+                {% endfor %}
+                {% if newRecepie.has_next %}
+                  <a href="?page={{ newRecepie.next_page_number }}">&raquo;</a>
+                {% else %}
+                  <a class="disabled"><span>&raquo;</span></a>
+                {% endif %}
+              </div>
+            {% endif %}
       </div>
     
     <script
