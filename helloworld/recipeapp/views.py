@@ -21,19 +21,23 @@ def home(request):
 
     return render(request, 'home.html', context=context)
 
+
 def browse(request):
     #View the browse recipe page
 
     #Get the recipes from the model file, then pass them to the browse recipe HTML template
     recipes = Recipe.objects.all()
-    paginator = Paginator(recipes,6) #Show 6 recipes per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(recipes, 6)
+    try:
+        newRecepie = paginator.page(page)
+    except PageNotAnInteger:
+        newRecepie = paginator.page(1)
+    except EmptyPage:
+        newRecepie = paginator.page(paginator.num_pages)
     context2 = {
         'recipes': recipes,
-        'page_obj': page_obj,
+        'newRecepie':newRecepie
     }
-
-
     return render(request, 'browse.html', context=context2)
 
