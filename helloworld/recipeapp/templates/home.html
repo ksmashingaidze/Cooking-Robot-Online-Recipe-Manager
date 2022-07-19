@@ -101,20 +101,31 @@
 }
 </style>
 <body>
-    <navbar class="position-relative w-100">
+        <navbar class="position-relative w-100">
         <nav class="nav navbar navbar-expand-lg navbar-dark bg-dark position-fixed " style="top:0px;z-index: 100;">
-            <a class="navbar-brand" href="#">Team HelloWorld Recipe Manager</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Team HelloWorld Recipe Manager</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              {% url 'home' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+              {% url 'browse' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'browse' %}">Recipes</a>
                 </li>
+               {% url 'login' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'login' %}">login</a>
+                </li>
+                {% url 'signup' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'signup' %}">Sign-up</a>
+                </li>
+              </ul>
             </div>
           </nav>
       </navbar>
