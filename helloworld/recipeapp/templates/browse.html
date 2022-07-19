@@ -244,7 +244,7 @@
     <div class="pagination">
         {% if newRecepie.has_previous %}
             <a href="?page=
-                    {{ newRecepie.previous_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}">&laquo;</a>
+                    {{ newRecepie.previous_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}{% if request.GET.time %}&time={{ request.GET.time }}{% endif %}">&laquo;</a>
         {% else %}
 <!--            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
             <a class="disabled">&laquo;</a>
@@ -253,11 +253,11 @@
             {% if newRecepie.number == num %}
                 <a class="active" href="#!">{{ num }}</a>
             {% else %}
-                <a href="?page={{ num }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}">{{ num }}</a>
+                <a href="?page={{ num }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}{% if request.GET.time %}&time={{ request.GET.time }}{% endif %}">{{ num }}</a>
             {% endif %}
         {% endfor %}
         {% if newRecepie.has_next %}
-            <a href="?page={{ newRecepie.next_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}"><i
+            <a href="?page={{ newRecepie.next_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}{% if request.GET.time %}&time={{ request.GET.time }}{% endif %}"><i
                     >&raquo;</a>
         {% else %}
             <a class="disabled" href="#!"><i class="material-icons">&raquo;</a>
