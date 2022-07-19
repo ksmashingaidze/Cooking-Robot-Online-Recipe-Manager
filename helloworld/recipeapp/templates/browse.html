@@ -165,64 +165,65 @@
         <h3 class="text-center">Try to find the best food for yourself!</h3>
           <div class="search-bar">
               <div class="inputs-search">
-                        <form>
+                        <form action="{% url 'browse' %}" method="GET">
                             <div class="search-input">
-                                <input type="text" class="" placeholder="Search recipes by name">
+                                <input type="text" class="" name="name" placeholder="Search recipes by name">
                             </div>
                             <div class="search-btn">
-                                <button class="btn btn-primary">Search</button>
+                                <input class="btn btn-primary" value="search" type="submit"/>
                             </div>
                             <div class="filtering-bnt">
                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     Filter
                                 </button>
                             </div>
-                            </form>
-                    <div class="collapse mt-3" id="collapseExample">
-                      <div class=" ml-auto flex-column">
-                        <div class="card card-body w-60">
-                          <div class="card" style="max-height: 150px; overflow-y: scroll;">
-                            
-                        <div class="card mt-4">
-                          <div class="card-header bg-primary text-white font-weight-bold">
-                              Rating
-                            </div>
-                          <ul class="list-group list-group-flush">
-                              <div class="form-group m-auto">
-                                  <input type="range" class="form-range" min="1"  max="5" id="customRange"  step="1" onInput="$('#rangeval').html($(this).val())">
-                                  <span id="rangeval">3<!-- Default value --></span> 
+                            <div class="collapse mt-3 w-50" id="collapseExample">
+                              <div class=" ml-auto flex-column">
+                                <div class="card card-body w-60">
+                                  <div class="card">
+
+                                <div class="card mt-4">
+                                  <div class="card-header bg-primary text-white font-weight-bold">
+                                      Rating
+                                    </div>
+                                  <ul class="list-group list-group-flush">
+                                      <div class="form-group m-auto">
+                                          <input type="range" class="form-range" min="1"  max="5" name="rate" id="customRange"  step="1" onInput="$('#rangeval').html($(this).val())">
+                                          <span id="rangeval">3<!-- Default value --></span>
+                                      </div>
+                                  </ul>
                               </div>
-                          </ul>
-                      </div>
-                      <div class="card mt-4">
-                          <div class="card-header bg-primary text-white font-weight-bold">
-                              Time
-                            </div>
-                          <ul class="list-group list-group-flush">
-                              <div class="form-group m-auto ">
-                                  <input type="range" class="form-range" min="30"  max="120" id="customRange2"  step="30" onInput="$('#rangeval2').html($(this).val())">
-                                  <span id="rangeval2">90<!-- Default value --></span> 
+                              <div class="card mt-4">
+                                  <div class="card-header bg-primary text-white font-weight-bold">
+                                      Time
+                                    </div>
+                                  <ul class="list-group list-group-flush">
+                                      <div class="form-group m-auto ">
+                                          <input type="range" class="form-range" min="30" name="time" max="120" id="customRange2"  step="30" onInput="$('#rangeval2').html($(this).val())">
+                                          <span id="rangeval2">90<!-- Default value --></span>
+                                      </div>
+                                  </ul>
                               </div>
-                          </ul>
-                      </div>
-                        </div>
-                      </div>
-                    </div>
-                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                        </form>
                 </div>
             </div>
       </section>
       <section class="items">
 		<!-- for each recipe in the database -->
 		
-		<div class="item-list">
+		<div class="item-list w-100">
         <div class="row item flex-row justify-content-center m-0 mb-2 " href="{{ recipes.get_absolute_url }}">
 			{% for item in newRecepie %}
-            <div class="col-lg-3 mr-lg-4">
-                <div class="card" style="width: 18rem;height:160px;">
+            <div class=" mr-lg-4">
+                <div class="card" style="width: 18rem;height:260px;">
                     <div class="card-body">
                       <h5 class="card-title" href="{{ recipes.get_absolute_url }}">{{ item.recipe_name }}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">{{ item.prep_time_min }} min. prep + {{ item.cook_time_min }} min. cook</h6>
+                      <h6 class="prep card-subtitle mb-2 text-muted">Preparation:<span>{{ item.prep_time_min }}</span></h6>
+                      <h6 class="cook card-subtitle mb-2 text-muted">Cooking:<span>{{ item.cook_time_min }}</span></h6>
                       <p class="card-text" style="text-overflow:ellipsis;overflow: hidden;white-space: nowrap;">{{ item.ingredients }}</p>
                       <a href="#" class="card-link"> Read more </a>
                     </div>
@@ -239,27 +240,31 @@
         
       </section>
       <div class="row flex-row justify-content-center pt-3 pb-3 m-0">
-             {% if newRecepie.has_other_pages %}
-                <div class="pagination">
-                       {% if newRecepie.has_previous %}
-                        <a href="?page={{ newRecepie.previous_page_number }}">&laquo;</a>
-                        {% else %}
-                        <a class="disabled"><span>&laquo;</span></a>
-                    {% endif %}
-                {% for i in newRecepie.paginator.page_range %}
-                  {% if newRecepie.number == i %}
-                    <a class="active">{{ i }}</a>
-                  {% else %}
-                    <a href="?page={{ i }}">{{ i }}</a>
-                  {% endif %}
-                {% endfor %}
-                {% if newRecepie.has_next %}
-                  <a href="?page={{ newRecepie.next_page_number }}">&raquo;</a>
-                {% else %}
-                  <a class="disabled"><span>&raquo;</span></a>
-                {% endif %}
-              </div>
+            {% if newRecepie.has_other_pages %}
+    <div class="pagination">
+        {% if newRecepie.has_previous %}
+            <a href="?page=
+                    {{ newRecepie.previous_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}">&laquo;</a>
+        {% else %}
+<!--            <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>-->
+            <a class="disabled">&laquo;</a>
+        {% endif %}
+        {% for num in newRecepie.paginator.page_range %}
+            {% if newRecepie.number == num %}
+                <a class="active" href="#!">{{ num }}</a>
+            {% else %}
+                <a href="?page={{ num }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}">{{ num }}</a>
             {% endif %}
+        {% endfor %}
+        {% if newRecepie.has_next %}
+            <a href="?page={{ newRecepie.next_page_number }}{% if request.GET.name %}&name={{ request.GET.name }}{% endif %}{% if request.GET.rate %}&rate={{ request.GET.rate }}{% endif %}"><i
+                    >&raquo;</a>
+        {% else %}
+            <a class="disabled" href="#!"><i class="material-icons">&raquo;</a>
+        {% endif %}
+    </div>
+{% endif %}
+
       </div>
     
     <script
