@@ -57,18 +57,29 @@
     
     <navbar class="position-relative w-100">
         <nav class="nav navbar navbar-expand-lg navbar-dark bg-dark position-fixed " style="top:0px;z-index: 100;">
-            <a class="navbar-brand" href="#">HelloTeamWorld</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Team HelloWorld Recipe Manager</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse " id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              {% url 'home' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link</a>
+              {% url 'browse' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'browse' %}">Recipes</a>
                 </li>
+               {% url 'login' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'login' %}">login</a>
+                </li>
+                {% url 'signup' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'signup' %}">Sign-up</a>
+                </li>
+              </ul>
             </div>
           </nav>
       </navbar>
@@ -90,7 +101,7 @@
                     <div class="inputs d-flex flex-column justify-content-center align-items-center">
                         <label class="font-weight-bold w-50">Your ID:</label>
                         <input type="text" name="userid" placeholder="Enter your id" class="w-50">
-                        <p class="font-weight-bolder p-0 m-0 p-2"><span class="mr-1">Do not have an account?</span><a href="#" class="text-primary text-decoration-none font-weight-light">Sign up</a></p>
+                        <p class="font-weight-bolder p-0 m-0 p-2"><span class="mr-1">Do not have an account?</span><a href="{% url 'signup' %}" class="text-primary text-decoration-none font-weight-light">Sign up</a></p>
                         <button class="btn btn-outline-primary mt-2 w-25">Submit</button>
                     </div>
                 </form>
