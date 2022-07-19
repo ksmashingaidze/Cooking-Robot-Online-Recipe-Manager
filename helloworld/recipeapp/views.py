@@ -44,4 +44,8 @@ def browse(request):
         'newRecepie': results,
     }
     return render(request, 'browse.html', context=context2)
-	
+def login(request):
+    return render(request,'login.html')
+
+def signup(request):
+    return render(request,'signup.html')
