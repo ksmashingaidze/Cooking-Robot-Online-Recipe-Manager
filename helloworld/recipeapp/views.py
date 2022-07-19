@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views import generic
 from .models import Recipe
 from django.db.models import Q
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def home(request):
     #View the home page
