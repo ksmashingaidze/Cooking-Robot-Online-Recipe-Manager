@@ -6,6 +6,7 @@ from .models import Recipe
 from django.db.models import Q
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
+
 def home(request):
     #View the home page
 
@@ -29,7 +30,7 @@ def browse(request):
     time = request.GET.get("time")
     if query:
         recipes = Recipe.objects.filter(recipe_name__icontains=query,rating__range=(1,rate),cook_time_min__range=(0,time))
-    if rate and time:
+    elif rate and time:
         recipes = Recipe.objects.filter(rating__range=(1, rate),cook_time_min__range=(0, time))
     paginator=Paginator(recipes,3)
     page=request.GET.get("page")
@@ -43,5 +44,4 @@ def browse(request):
         'newRecepie': results,
     }
     return render(request, 'browse.html', context=context2)
-
 	
