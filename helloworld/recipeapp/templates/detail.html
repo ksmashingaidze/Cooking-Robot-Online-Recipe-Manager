@@ -168,7 +168,7 @@
             <div class="container-fluid heading">
                 <div class="card bg-dark text-white font-weight-bold">
                     <div class="card-body">
-                        <p class="font-italic">Find The Perfect Recipe</p>
+                        <p class="font-italic">{{ selected_recipe.recipe_name }}</p>
                     </div>
                 </div>
             </div>
@@ -178,18 +178,20 @@
 	 <section class="items">
 		<div class="item-list" href="{{ selected_recipe.get_absolute_url }}">
 		
-		<div class="col-3 mr-4">
-            <div class="card" style="width: 18rem;">
+		<div class="col-5 mr-4">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ selected_recipe.recipe_name }}</h5>
+                    <h5 class="card-title text-primary">{{ selected_recipe.recipe_name }}</h5>
 					<h6 class="card-title">{{ selected_recipe.author }}</h6>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ selected_recipe.prep_time_min }} min. prep + {{ selected_recipe.cook_time_min }} min. cook</h6>
-				    <h6 class="card-subtitle mb-2 text-muted">{{ selected_recipe.cook_setting }} heat</h6>
-					<h6 class="card-subtitle mb-2 text-muted">{{ selected_recipe.calories }} cal</h6>
+                    <h6 class="card-subtitle mb-2 text-warning">{{ selected_recipe.prep_time_min }} min. prep + {{ selected_recipe.cook_time_min }} min. cook</h6>
+				    <h6 class="card-subtitle mb-2 text-danger">{{ selected_recipe.cook_setting }} heat</h6>
+					<h6 class="card-subtitle mb-2 text-success">{{ selected_recipe.calories }} cal</h6>
                     <h6 class="card-title">{{ selected_recipe.utensils }}</h6>
-				    <p class="card-text">{{ selected_recipe.ingredients }}</p>
+                    <p class="card-text">
+                        {{selected_recipe.ingredients}}
+                    </p>
 				    <p class="card-text">{{ selected_recipe.prep_directions }}</p>
-                    <h6 class="card-subtitle mb-2 text-muted">Rating: {{ selected_recipe.rating }}</h6>
+                    <h6 class="card-subtitle mb-2 text-warning">Rating: {{ selected_recipe.rating }}</h6>
                 </div>
             </div>
         </div>
