@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +31,7 @@ ALLOWED_HOSTS = []
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 # Application definition
-CRISPY_TEMPLATE_PACK="bootstrap4"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,7 +43,7 @@ INSTALLED_APPS = [
     'register.apps.RegisterConfig',
     'dashboard.apps.DashboardConfig',
     # Add the new application
-    'recipeapp.apps.RecipeappConfig', #Present in /recipeapp/apps.py
+    'recipeapp.apps.RecipeappConfig',  # Present in /recipeapp/apps.py
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'statics'),
 ]
 
 WSGI_APPLICATION = 'helloworld.wsgi.application'
@@ -127,3 +132,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'teamhelloworld65@gmail.com'
+EMAIL_HOST_PASSWORD = 'gtuavpudrrmpjesa'
