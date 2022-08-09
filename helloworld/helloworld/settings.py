@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-#=&3*!wfcym#+#gx_z-cxn2@cc7^($!tbc8-slr8w0unra4(8k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
@@ -139,5 +139,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'helloworlproject@gmail.com'
-EMAIL_HOST_PASSWORD = 'malkzfcqprdrlfjp'
-# EMAIL_HOST_PASSWORD = 'Te@mhelloworld'
+EMAIL_HOST_PASSWORD = 'bzpjztqeroxcwiat'
