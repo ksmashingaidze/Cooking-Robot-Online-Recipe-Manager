@@ -1,8 +1,11 @@
+import imp
 from django.shortcuts import render
-
+import json
+from django.http import HttpResponse,JsonResponse
 # Create your views here.
 from django.views import generic
-from .models import Recipe
+from .forms import AddRating
+from .models import Recipe,RecipeReview
 from django.db.models import Q
 from django.core.mail import send_mail as sm
 from django.conf import settings
@@ -58,10 +61,12 @@ def detail(request, id):
 
     # Get the recipes from the model file, then pass them to the browse recipe HTML template
     selected_recipe = Recipe.objects.get(id=id)
+    ratingForm=AddRating
     context = {
         'selected_recipe': selected_recipe,
+        'form':ratingForm,
     }
-
+    
     return render(request, 'detail.html', context=context)
 
 
@@ -81,4 +86,12 @@ def send_emails(request, pk):
             recipient_list=[my_email],
             fail_silently=False,)
 
-        return HttpResponse(f"Recipe sent to user")
+        return HttpResponse(f"Receipe sent to user")
+
+def saved_rating(request,pid):
+    recipe=Recipe.objects.get(pk=pid)
+    rate=RecipeReview.objects.create(
+        recipe=recipe,
+        review_rating=request.POST['review_rating'],
+    )
+    return JsonResponse({'bool':True})

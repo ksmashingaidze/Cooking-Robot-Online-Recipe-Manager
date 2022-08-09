@@ -68,4 +68,16 @@ class Recipe(models.Model):
 #)
 # Save the object into the database.
 #record.save()
+RATING=(
+    (1,'1'),
+    (2,'2'),
+    (3,'3'),
+    (4,'4'),
+    (5,'5'),
+)
+class RecipeReview(models.Model):
+    recipe=models.ForeignKey(Recipe,on_delete=models.CASCADE)
+    review_rating=models.CharField(choices=RATING,max_length=150)
 
+    def get_recipereview(self):
+        return self.review_rating
