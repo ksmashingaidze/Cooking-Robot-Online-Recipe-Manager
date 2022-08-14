@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
+    <title>HelloWorld</title>
+</head>
+<style>
+    *{
+          box-sizing: content-box;
+      }
+      body{
+          margin: 0;
+      }
+      .nav{
+        top: 0px;
+    padding: 0;
+    width: 100%;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 9px;
+      }
+      #heading{
+            display: flex;
+            flex-direction: row;
+            height: 300px;
+            background: #333;
+            width: 100%;
+            margin-top: 60px;
+            justify-content: center;
+      }
+      .heading{
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+      }
+      .users{
+          display: flex;
+          flex-direction: row;
+          width: 100%;
+      }
+      .user-list{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        list-style: none;
+        justify-content: space-around;
+        padding: 0;
+      }
+      .user-item{
+          display: flex;
+          flex-direction: column;
+          width: 250px;
+          justify-content: center;
+          align-items: center;
+          border-right: 1px solid #ccc;
+      }
+      
+.items{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.item-list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width:700px) {
+    #heading{
+        height: auto;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+    }
+    .users{
+        flex-direction: column;
+    }
+    .user-list{
+        flex-direction: column;
+    }
+    .user-item{
+        border-right: 0;
+        border-bottom: 1px solid #ccc;
+    }
+    
+    .item{
+         flex-direction: column !important;
+       }
+}
+</style>
+<body>
+
+    <navbar class="position-relative w-100">
+        <nav class="nav navbar navbar-expand-lg navbar-dark bg-dark position-fixed " style="top:0px;z-index: 100;">
+            <a class="navbar-brand" href="{% url 'home' %}">Team HelloWorld Recipe Manager</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+              {% url 'home' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+              {% url 'browse' as url %}
+                <li class="nav-item {% if request.path == url %}active{% endif %}">
+                  <a class="nav-link" href="{% url 'browse' %}">Recipes</a>
+
+                </li>
+                  {% if request.user.is_authenticated %}
+						{% url 'dashboard' as url %}
+                        <li class="nav-item {% if request.path == url %}active{% endif %}">
+                          <a class="nav-link text-danger" href="{% url 'dashboard' %}">HELLO {{ request.user.username }}</a>
+                        </li>
+                  {% else %}
+                       {% url 'login' as url %}
+                        <li class="nav-item {% if request.path == url %}active{% endif %}">
+                          <a class="nav-link" href="{% url 'login' %}">login</a>
+                        </li>
+                        {% url 'register' as url %}
+                        <li class="nav-item {% if request.path == url %}active{% endif %}">
+                          <a class="nav-link" href="{% url 'register' %}">Sign-up</a>
+                        </li>
+                  {% endif %}
+              </ul>
+            </div>
+          </nav>
+      </navbar>
+
+      
+      <section id="heading">
+        <div class="container-fluid heading">
+            <div class="card bg-dark text-white font-weight-bold">
+                <div class="card-body">
+                    <p class="font-italic text-center">Welcome to our website</p>
+                    <div class="users">
+                        <ul class="user-list">
+                            <li class="user-item  ">
+                                <p class="font-weight-bold">Soroush</p>
+                                <p class="font-italic font-weight-light text-primary">40197533</p>
+                            </li>
+                            <li class="user-item">
+                                <p class="font-weight-bold">Stephen</p>
+                                <p class="font-italic font-weight-light text-primary">40202408</p>
+                            </li>
+                            <li class="user-item">
+                                <p class="font-weight-bold">Ayush</p>
+                                <p class="font-italic font-weight-light text-primary">40184687</p>
+                            </li>
+                            <li class="user-item">
+                                <p class="font-weight-bold">Shreya</p>
+                                <p class="font-italic font-weight-light text-primary">40200484</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="items">
+        <h3 class="text-center">Our 3 best recipes</h3>
+        <div class="item-list">
+        <div class="row item flex-row  m-0 mb-2 ">
+            <div class="col-3 mr-4">
+                <div class="card" style="width: 18rem;">
+					{% if recipe1.image %}
+							<img src="{{ recipe1.image.url }}" class="card-img-top img-fluid" alt="{{ recipe1.title }}">
+						{% else %}
+							No image.
+					{% endif %}
+                    <div class="card-body">
+					  <h5 class="card-title" href="{{ recipes.get_absolute_url }}">
+						{% if recipe1.recipe_name is empty %}
+							Empty.
+						{% else %}
+							{{ recipe1.recipe_name }}
+						{% endif %}
+					  </h5> 
+                      <h6 class="card-subtitle mb-2 text-muted">
+						{% if recipe1.prep_time_min is empty %}
+							Empty.
+						{% else %}
+							{{ recipe1.prep_time_min }} min. prep
+						{% endif %}
+						
+						{% if recipe1.cook_time_min is empty %}
+							+ Empty.
+						{% else %}
+							+ {{ recipe1.cook_time_min }} min. cook
+						{% endif %}
+					  </h6>
+                      <p class="card-text">
+						{% if recipe1.ingredients is empty %}
+							Empty.
+						{% else %}
+							{{ recipe1.ingredients }}
+						{% endif %}
+					  </p>
+                      <a href="{% url 'detail' id=recipe1.id %}" class="card-link">Read more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 mr-4">
+                <div class="card" style="width: 18rem;">
+					{% if recipe2.image %}
+							<img src="{{ recipe2.image.url }}" class="card-img-top img-fluid" alt="{{ recipe2.title }}">
+						{% else %}
+							No image.
+					{% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title" href="{{ recipes.get_absolute_url }}">
+						{% if recipe2.recipe_name is empty %}
+							Empty.
+						{% else %}
+							{{ recipe2.recipe_name }}
+						{% endif %}
+					  </h5>
+                      <h6 class="card-subtitle mb-2 text-muted">
+						{% if recipe2.prep_time_min is empty %}
+							Empty.
+						{% else %}
+							{{ recipe2.prep_time_min }} min. prep
+						{% endif %}
+						
+						{% if recipe2.cook_time_min is empty %}
+							+ Empty.
+						{% else %}
+							+ {{ recipe2.cook_time_min }} min. cook
+						{% endif %}
+					  </h6>
+                      <p class="card-text">
+						{% if recipe2.ingredients is empty %}
+							Empty.
+						{% else %}
+							{{ recipe2.ingredients }}
+						{% endif %}
+					  </p>
+                      <a href="{% url 'detail' id=recipe2.id %}" class="card-link">Read more</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 mr-4">
+                <div class="card" style="width: 18rem;">
+					{% if recipe3.image %}
+							<img src="{{ recipe3.image.url }}" class="card-img-top img-fluid" alt="{{ recipe3.title }}">
+						{% else %}
+							No image.
+					{% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title">
+						{% if recipe3.recipe_name is empty %}
+							Empty.
+						{% else %}
+							{{ recipe3.recipe_name }}
+						{% endif %}
+					  </h5>
+                      <h6 class="card-subtitle mb-2 text-muted">
+						{% if recipe3.prep_time_min is empty %}
+							Empty.
+						{% else %}
+							{{ recipe3.prep_time_min }} min. prep
+						{% endif %}
+						
+						{% if recipe3.cook_time_min is empty %}
+							+ Empty.
+						{% else %}
+							+ {{ recipe3.cook_time_min }} min. cook
+						{% endif %}
+					  </h6>
+                      <p class="card-text">
+						{% if recipe3.ingredients is empty %}
+							Empty.
+						{% else %}
+							{{ recipe3.ingredients }}
+						{% endif %}
+					  </p>
+                      <a href="{% url 'detail' id=recipe3.id %}" class="card-link">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <a href="{% url 'browse' %}" class="btn btn-outline-primary text-center mt-4 mb-4" style="width: 300px;">See More Recipes</a>
+      </section>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+      crossorigin="anonymous"
+    ></script>
+</body>
+</html>
